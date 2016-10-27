@@ -7,4 +7,5 @@ cron.command('node /home/cps/dev/my/shadow/ghost/schemel.js', every='5.minute', 
                   stderr='/tmp/top_stderr.log'))
 
 if __name__ == "__main__":
+    cron.run("check")
     cron.run("write")
