@@ -1,11 +1,17 @@
 from plan import Plan
+import os
 
-cron = Plan("commands")
-
-cron.command('node /home/cps/dev/my/shadow/ghost/schemel.js', every='5.minute', output=
-             dict(stdout='/tmp/top_stdout.log',
-                  stderr='/tmp/top_stderr.log'))
 
 if __name__ == "__main__":
-    cron.run("check")
-    cron.run("write")
+  ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+  cron = Plan("commands")
+  # online
+  cron.command('node %s/ghost/online.js'%ROOT_PATH, every='1.day', at="hour.19 minute.30", output=
+               dict(stdout='%s/log/online_stdout.log'%ROOT_PATH,
+                    stderr='%s/log/online_stderr.log'%ROOT_PATH))
+  # offline
+  cron.command('node %s/ghost/offline.js'%ROOT_PATH, every='1.day', at="hour.8 minute.30", output=
+               dict(stdout='%s/log/offline_stdout.log'%ROOT_PATH,
+                    stderr='%s/log/offline_stderr.log'%ROOT_PATH))
+  cron.run("check")
+  # cron.run("write")
